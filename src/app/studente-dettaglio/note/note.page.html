@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-back-button [defaultHref]="'/studente-dettaglio/'+studente?.id"></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Lista note
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row class="ion-align-items-center">
+      <ion-col *ngIf="studente">
+        <ion-list>
+          <ion-item *ngFor="let nota of studente.note;">
+            <ion-label class="ion-text-wrap">
+              {{nota.dataCreazione|date:'dd/MM/yyyy'}} - {{nota.titolo}}
+            </ion-label>
+            <ion-buttons slot="end">
+              <ion-icon color="success" name="create-outline" slot="icon-only"></ion-icon>
+              <ion-icon color="danger" name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-buttons>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col size="12" size-sm="8" class="ion-text-center">
+        <ion-card *ngIf="!studente">
+          <ion-card-content>
+            <p>Studente non trovato!</p>
+          </ion-card-content>
+          <div>
+            <ion-button routerLink="/home">Torna alla home</ion-button>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
