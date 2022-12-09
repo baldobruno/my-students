@@ -7,7 +7,17 @@ const routes: Routes = [
   {
     path: '',
     component: PagamentiPage
+  },
+  {
+    path: 'modifica-pagamento/:idPagamento',
+    loadChildren: () => import('./modifica-pagamento/modifica-pagamento.module').then( m => m.ModificaPagamentoPageModule)
+  },
+  {
+    path: 'crea-pagamento',
+    loadChildren: () => import('./crea-pagamento/crea-pagamento.module').then( m => m.CreaPagamentoPageModule)
   }
+
+
 ];
 
 @NgModule({

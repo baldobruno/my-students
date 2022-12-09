@@ -6,7 +6,7 @@ import { Nota } from "./nota.model";
 export class Studente {
 
   constructor(
-    public id:number,
+    public id:string,
     public nome:string,
     public classe:string,
     public indirizzo:string,

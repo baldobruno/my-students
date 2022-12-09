@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: NotePage
+  },
+  {
+    path: 'modifica-nota/:idNota',
+    loadChildren: () => import('./modifica-nota/modifica-nota.module').then( m => m.ModificaNotaPageModule)
+  },
+  {
+    path: 'crea-nota',
+    loadChildren: () => import('./crea-nota/crea-nota.module').then( m => m.CreaNotaPageModule)
   }
 ];
 

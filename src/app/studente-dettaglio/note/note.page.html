@@ -9,7 +9,7 @@
       Lista note
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button>
+      <ion-button [routerLink]="['crea-nota']">
         <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -18,21 +18,25 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-align-items-center">
-      <ion-col *ngIf="studente">
+      <ion-col *ngIf="studente" size-md="6" offset-md="3">
         <ion-list>
           <ion-item *ngFor="let nota of studente.note;">
             <ion-label class="ion-text-wrap">
               {{nota.dataCreazione|date:'dd/MM/yyyy'}} - {{nota.titolo}}
             </ion-label>
-            <ion-buttons slot="end">
+            <ion-button class="ion-no-padding ion-justify-content-right" fill="clear"
+              [routerLink]="['modifica-nota',nota.id]">
               <ion-icon color="success" name="create-outline" slot="icon-only"></ion-icon>
-              <ion-icon color="danger" name="trash-outline" slot="icon-only"></ion-icon>
-            </ion-buttons>
+            </ion-button>
+            <ion-button class="ion-no-padding ion-justify-content-right" fill="clear" (click)="onRemoveNota(nota.id)">
+              <ion-icon color="danger" name="trash-outline" slot="icon-only">
+              </ion-icon>
+            </ion-button>
           </ion-item>
         </ion-list>
       </ion-col>
-      <ion-col size="12" size-sm="8" class="ion-text-center">
-        <ion-card *ngIf="!studente">
+      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!studente">
+        <ion-card>
           <ion-card-content>
             <p>Studente non trovato!</p>
           </ion-card-content>

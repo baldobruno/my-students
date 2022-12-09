@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Studente } from '../model/studente.model';
 import { StudenteService } from '../service/studente.service';
 
@@ -8,8 +9,9 @@ import { StudenteService } from '../service/studente.service';
   templateUrl: './studente-dettaglio.page.html',
   styleUrls: ['./studente-dettaglio.page.scss'],
 })
-export class StudenteDettaglioPage implements OnInit {
+export class StudenteDettaglioPage implements OnInit, OnDestroy {
   studente: Studente;
+  private studenteSub: Subscription;
 
   constructor(
     private studentiService: StudenteService,
@@ -22,12 +24,22 @@ export class StudenteDettaglioPage implements OnInit {
       if (!paramMap.has('id')) {
         return;
       }
-      this.studente = this.studentiService.getStudenteById(+paramMap.get('id'));
+      this.studenteSub = this.studentiService
+        .getStudenteById(paramMap.get('id'))
+        .subscribe((studente) => {
+          this.studente = studente;
+        });
     });
   }
 
-  removeStudente(id: number) {
-    this.studentiService.removeStudenteById(id);
-    this.router.navigate(['home']);
+  removeStudente(id: string) {
+    this.studentiService.removeStudenteById(id).subscribe(() => {
+      this.router.navigate(['home']);
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.studenteSub) {
+      this.studenteSub.unsubscribe();
+    }
   }
 }

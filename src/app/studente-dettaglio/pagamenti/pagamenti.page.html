@@ -6,10 +6,10 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Info pagamenti
+      Pagamenti
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button>
+      <ion-button [routerLink]="['crea-pagamento']">
         <ion-icon name="add-circle-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -18,20 +18,25 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-align-items-center">
-      <ion-col *ngIf="studente">
+      <ion-col *ngIf="studente" size-md="6" offset-md="3">
         <ion-list>
           <ion-item *ngFor="let pagamento of studente.pagamenti;">
-            <ion-label>{{'2022-'+pagamento.mese+'-01'|date:'MMMM':undefined:'it'}} -
+            <ion-label>{{'2022-'+pagamento.mese+'-01'|date:'MMMM':undefined:'it'|titlecase}} ({{pagamento.numeroOre}}h)
               {{pagamento.importo|currency:'EUR'}}</ion-label>
-            <ion-buttons slot="end">
+            <ion-button class="ion-no-padding ion-justify-content-right" fill="clear"
+              [routerLink]="['modifica-pagamento',pagamento.id]">
               <ion-icon color="success" name="create-outline" slot="icon-only"></ion-icon>
-              <ion-icon color="danger" name="trash-outline" slot="icon-only"></ion-icon>
-            </ion-buttons>
+            </ion-button>
+            <ion-button class="ion-no-padding ion-justify-content-right" fill="clear"
+              (click)="onDeletePagamento(pagamento.id)">
+              <ion-icon color="danger" name="trash-outline" slot="icon-only">
+              </ion-icon>
+            </ion-button>
           </ion-item>
         </ion-list>
       </ion-col>
-      <ion-col size="12" size-sm="8" class="ion-text-center">
-        <ion-card *ngIf="!studente">
+      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!studente">
+        <ion-card>
           <ion-card-content>
             <p>Studente non trovato!</p>
           </ion-card-content>

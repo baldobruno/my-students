@@ -15,7 +15,13 @@ const routes: Routes = [
   {
     path: ':id/note',
     loadChildren: () => import('./note/note.module').then( m => m.NotePageModule)
+  },
+  {
+    path: ':id/calendario',
+    loadChildren: () => import('./calendario/calendario.module').then( m => m.CalendarioPageModule)
   }
+
+
 ];
 
 @NgModule({

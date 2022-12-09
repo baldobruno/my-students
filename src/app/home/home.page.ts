@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Studente } from '../model/studente.model';
 import { StudenteService } from '../service/studente.service';
 
@@ -7,11 +8,22 @@ import { StudenteService } from '../service/studente.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   studenti: Studente[] = [];
+  private studentiSub: Subscription;
 
   constructor(private studentiService: StudenteService) {}
   ngOnInit() {
-    this.studenti = this.studentiService.listaStudenti();
+    this.studentiSub = this.studentiService.studenti.subscribe((studenti) => {
+      this.studenti = studenti;
+    });
+  }
+  ionViewWillEnter() {
+    this.studentiService.listaStudenti().subscribe();
+  }
+  ngOnDestroy(): void {
+    if (this.studentiSub) {
+      this.studentiSub.unsubscribe();
+    }
   }
 }

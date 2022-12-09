@@ -5,7 +5,12 @@
         <ion-back-button [defaultHref]="'/home'"></ion-back-button>
       </ion-button>
     </ion-buttons>
-    <ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon class="ion-padding"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
       Info studente
     </ion-title>
   </ion-toolbar>
@@ -13,20 +18,20 @@
 <ion-content>
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-align-items-center">
-      <ion-col *ngIf="studente">
-        <ion-list>
-          <ion-item>
-            <ion-label>Nome: {{studente.nome}}</ion-label>
-            <ion-buttons slot="end">
-              <ion-icon color="success" name="create-outline" slot="icon-only"></ion-icon>
-              <ion-icon color="danger" name="trash-outline" slot="icon-only" (click)="removeStudente(studente.id)">
-              </ion-icon>
-            </ion-buttons>
-          </ion-item>
-        </ion-list>
+      <ion-col *ngIf="studente" size-md="6" offset-md="3">
+        <ion-item>
+          <ion-label>{{studente.nome}}</ion-label>
+          <ion-button class="ion-no-padding ion-justify-content-right" fill="clear">
+            <ion-icon color="success" name="create-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button class="ion-no-padding ion-justify-content-right" fill="clear"
+            (click)="removeStudente(studente.id)">
+            <ion-icon color="danger" name="trash-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
       </ion-col>
-      <ion-col size="12" size-sm="8" class="ion-text-center">
-        <ion-card *ngIf="!studente">
+      <ion-col size="12" size-sm="8" class="ion-text-center" *ngIf="!studente">
+        <ion-card>
           <ion-card-content>
             <p>Studente non trovato!</p>
           </ion-card-content>
@@ -38,3 +43,20 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="ion-text-center">
+          <ion-icon name="calendar-outline" [routerLink]="['calendario']" size="large"></ion-icon>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <ion-icon name="wallet-outline" [routerLink]="['pagamenti']" size="large"></ion-icon>
+        </ion-col>
+        <ion-col class="ion-text-center">
+          <ion-icon name="document-text-outline" [routerLink]="['note']" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

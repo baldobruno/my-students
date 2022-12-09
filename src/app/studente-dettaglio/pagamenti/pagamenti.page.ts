@@ -14,7 +14,7 @@ export class PagamentiPage implements OnInit {
   constructor(
     private studentiService: StudenteService,
     private route: ActivatedRoute,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -23,7 +23,17 @@ export class PagamentiPage implements OnInit {
         this.router.navigate(['home']);
         return;
       }
-      this.studente = this.studentiService.getStudenteById(+paramMap.get('id'));
+      this.studentiService
+        .getStudenteById(paramMap.get('id'))
+        .subscribe((studente) => {
+          this.studente = studente;
+        });
     });
+  }
+
+  onDeletePagamento(idPagamento: number) {
+    this.studentiService
+      .removePagamentoById(this.studente.id, idPagamento)
+      .subscribe();
   }
 }
